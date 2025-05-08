@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8mouf3l6h3ip"]
+
+[ext_resource type="Script" path="res://Scenes/fade.gd" id="1_jphei"]
+
+[sub_resource type="Animation" id="Animation_o775t"]
+resource_name = "FadeUwU"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dfd4k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vs45r"]
+_data = {
+"FadeUwU": SubResource("Animation_o775t"),
+"RESET": SubResource("Animation_dfd4k")
+}
+
+[node name="Fade" type="Node"]
+script = ExtResource("1_jphei")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 20
+custom_minimum_size = Vector2(288, 512)
+offset_left = -144.0
+offset_top = -256.0
+offset_right = 144.0
+offset_bottom = 256.0
+color = Color(1, 1, 1, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vs45r")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

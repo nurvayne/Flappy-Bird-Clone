@@ -1,0 +1,93 @@
+[gd_scene load_steps=10 format=3 uid="uid://b6q0o05cg0xek"]
+
+[ext_resource type="Texture2D" uid="uid://bjn7mqbj3rrm" path="res://Assets/yellowbird-midflap.png" id="1_4ti11"]
+[ext_resource type="Script" path="res://Scenes/birb.gd" id="1_wewta"]
+[ext_resource type="Texture2D" uid="uid://bxetx2w3gs4gr" path="res://Assets/yellowbird-downflap.png" id="3_7n2wl"]
+[ext_resource type="Texture2D" uid="uid://cfmtmqos4atil" path="res://Assets/yellowbird-upflap.png" id="4_eaj6p"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yv0v1"]
+radius = 12.0
+height = 34.0
+
+[sub_resource type="Animation" id="Animation_qitml"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_4ti11")]
+}
+
+[sub_resource type="Animation" id="Animation_805f2"]
+resource_name = "flap_wings"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_7n2wl"), ExtResource("1_4ti11"), ExtResource("4_eaj6p")]
+}
+
+[sub_resource type="Animation" id="Animation_1jetc"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -10)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pfb36"]
+_data = {
+"RESET": SubResource("Animation_qitml"),
+"flap_wings": SubResource("Animation_805f2"),
+"idle": SubResource("Animation_1jetc")
+}
+
+[node name="Birb" type="CharacterBody2D"]
+script = ExtResource("1_wewta")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_4ti11")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_yv0v1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pfb36")
+}

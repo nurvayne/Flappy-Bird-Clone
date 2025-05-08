@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkgxd0s2xbgs1"]
+
+[ext_resource type="Script" path="res://Scenes/ui.gd" id="1_d38hx"]
+[ext_resource type="FontFile" uid="uid://cu4lf4od2owng" path="res://Assets/font/FlappyBird.ttf" id="2_m0w0g"]
+[ext_resource type="Texture2D" uid="uid://x218sp1de1n0" path="res://Assets/gameover.png" id="3_nqxyj"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_d38hx")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 32
+
+[node name="PointsLabel" type="Label" parent="MarginContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_m0w0g")
+theme_override_font_sizes/font_size = 80
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOverBox" type="VBoxContainer" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/GameOverBox"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_nqxyj")
+
+[node name="RestartButton" type="Button" parent="MarginContainer/GameOverBox"]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_m0w0g")
+theme_override_font_sizes/font_size = 30
+text = "RESTART"
+
+[connection signal="pressed" from="MarginContainer/GameOverBox/RestartButton" to="." method="_on_restart_button_pressed"]
